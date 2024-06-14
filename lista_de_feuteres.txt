@@ -1,0 +1,8 @@
+() -> Opcional
+
+01 - Add mais telas html
+02 - Redefinir alguns diagramas
+03 - Deletar Conta
+04 - Redefinir senha
+05 - (Bloquear voltar tela)
+06 - (Criptografar senhas)
