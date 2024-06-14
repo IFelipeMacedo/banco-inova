@@ -47,6 +47,14 @@ def pagina_admin():
 def index():
     return render_template('index.html')
 
+@app.route('configuracao_conta', methods=['GET', 'POST'])
+def configuracao_conta():
+    if request.method == 'POST':
+        senha = request.form['senha']
+        banco.atualizar_cliente(senha, cpf_cliente_log)
+        return redirect(url_for('pagina_usuario'))
+    return render_template('configuracao_conta.html')
+
 @app.route('/pagina_usuario')
 def pagina_usuario():
     return render_template('pagina_usuario.html')
