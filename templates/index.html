@@ -1,20 +1,158 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Banco</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+        integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2DhYQj80XIR7IpTD7WRnoxTtr1EY6I4P1kpW6P7mmdE5dTPRmLJImq25DZjZ3JOw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url('https://png.pngtree.com/background/20210715/original/pngtree-blue-technology-circuit-style-background-picture-image_1306799.jpg') no-repeat center center fixed;
+            background-size: cover;
+            height: 100vh;
+            color: #ffcc00;
+            overflow: hidden;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 68, 204, 0.7);
+            z-index: 1;
+        }
+
+        .navbar {
+            position: relative;
+            z-index: 2;
+            background: linear-gradient(to right, #0044cc, #0066ff);
+            padding: 15px;
+            border-radius: 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 100%;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .navbar .btn {
+            color: white;
+            font-size: 1.2em;
+            margin: 0 15px;
+            text-decoration: none;
+            border: 2px solid rgb(0, 2, 119);
+            background-color: #0066ff;
+            transition: color 0.3s, background-color 0.3s;
+            border-radius: 40px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar .btn:hover {
+            color: #0044cc;
+            background-color: #ffcc00;
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .info-box {
+            background: rgba(255, 255, 255, 0.9);
+            color: #0044cc;
+            padding: 30px;
+            border-radius: 40px;
+            box-shadow: 0 5px 10px #ffcc00;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: left;
+            animation: fadeIn 2s ease-in-out;
+            border: 2px solid #ffcc00;
+        }
+
+        .info-box h2 {
+            color: #0044cc;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .info-box p {
+            font-size: 1.1em;
+            line-height: 1.6em;
+        }
+
+        footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background-color: #0044cc;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            z-index: 2;
+        }
+    </style>
 </head>
 
 <body>
-    <h1>Banco</h1>
-    <ul>
-        <li><a href="{{ url_for('adicionar_cliente') }}">Adicionar Cliente</a></li>
-        <li><a href="{{ url_for('depositar') }}">Depositar</a></li>
-        <li><a href="{{ url_for('sacar') }}">Sacar</a></li>
-        <li><a href="{{ url_for('transferir') }}">Transferir</a></li>
-        <li><a href="{{ url_for('visualizar_extrato') }}">Visualizar Extrato</a></li>
-        <li><a href="{{ url_for('visualizar_saldo') }}">Visualizar Saldo</a></li>
-    </ul>
+    <div class="overlay"></div>
+    <div class="navbar">
+        <a href="{{ url_for('adicionar_cliente') }}" class="btn">Adicionar Cliente</a>
+        <a href="{{ url_for('depositar') }}" class="btn">Depositar</a>
+        <a href="{{ url_for('sacar') }}" class="btn">Sacar</a>
+        <a href="{{ url_for('transferir') }}" class="btn">Transferir</a>
+        <a href="{{ url_for('visualizar_extrato') }}" class="btn">Visualizar Extrato</a>
+        <a href="{{ url_for('visualizar_saldo') }}" class="btn">Visualizar Saldo</a>
+    </div>
+    <div class="content" id="mainContent">
+        <h1>Bem-vindo ao Banco Inova</h1>
+        <div class="info-box">
+            <h2>Sobre o Banco Inova</h2>
+            <p>O Banco Inova é uma instituição financeira comprometida com a inovação e a excelência no atendimento aos
+                seus clientes. Nossa missão é proporcionar soluções financeiras que facilitem a vida das pessoas e das
+                empresas, promovendo crescimento e sustentabilidade.</p>
+            <p>Oferecemos uma ampla gama de serviços, incluindo contas correntes, poupança, investimentos, crédito,
+                seguros e muito mais. Nosso objetivo é ser um parceiro confiável e estratégico para todos os nossos
+                clientes, ajudando-os a alcançar seus objetivos financeiros.</p>
+            <h2>Notícias e Atualizações</h2>
+            <p>Fique por dentro das últimas notícias e atualizações do Banco Inova. Aqui você encontrará informações
+                sobre novos produtos, serviços, eventos e muito mais. Estamos sempre trabalhando para trazer o melhor
+                para você.</p>
+            <ul>
+                <li>Lançamento do novo aplicativo Banco Inova.</li>
+                <li>Campanha de educação financeira para jovens.</li>
+                <li>Abertura de novas agências em todo o país.</li>
+            </ul>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2024 Banco Inova. Todos os direitos reservados.</p>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>

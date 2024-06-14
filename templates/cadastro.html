@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Banco Inova - Login</title>
+    <title>Banco Inova - Cadastro</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
         integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2DhYQj80XIR7IpTD7WRnoxTtr1EY6I4P1kpW6P7mmdE5dTPRmLJImq25DZjZ3JOw=="
@@ -43,7 +43,7 @@
             z-index: 1;
         }
 
-        .login-container {
+        .cadastro-container {
             position: relative;
             z-index: 2;
             background: linear-gradient(to right, #0044cc, #0066ff);
@@ -68,24 +68,43 @@
             }
         }
 
-        .login-container h1 {
+        .cadastro-container h1 {
             margin-bottom: 20px;
             color: white;
             font-size: 2em;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
 
-        .login-container .input-group {
-            margin: 10px 0;
+        .cadastro-container .input-group {
+            margin-bottom: 20px;
         }
 
-        .login-container .input-group .input-group-prepend .input-group-text {
-            background-color: #ffcc00;
+        .cadastro-container .input-group .input-group-prepend .input-group-text {
+            background-color: transparent;
             color: white;
             border: none;
         }
 
-        .login-container input[type="submit"] {
+        .cadastro-container input[type="text"],
+        .cadastro-container input[type="password"] {
+            background-color: white;
+            border: none;
+            border-bottom: 2px solid #ffcc00;
+            color: #0044cc;
+            margin-bottom: 20px;
+            padding: 10px;
+            width: 100%;
+            font-size: 1em;
+            transition: border-bottom-color 0.3s;
+        }
+
+        .cadastro-container input[type="text"]:focus,
+        .cadastro-container input[type="password"]:focus {
+            border-bottom-color: #9e841a;
+            outline: none;
+        }
+
+        .cadastro-container input[type="submit"] {
             background-color: #ffcc00;
             color: #0044cc;
             padding: 15px;
@@ -98,25 +117,9 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        .login-container input[type="submit"]:hover {
+        .cadastro-container input[type="submit"]:hover {
             background-color: #9e841a;
             color: antiquewhite;
-        }
-
-        .info-bar {
-            background-color: #0044cc;
-            color: white;
-            text-align: center;
-            padding: 10px 0;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 2;
-        }
-
-        .info-bar p {
-            margin: 0;
         }
 
         footer {
@@ -133,39 +136,34 @@
 </head>
 
 <body>
-    <div class="info-bar">
-        <p>Banco Inova: Transformando inovação em soluções práticas e eficientes para você.</p>
-    </div>
     <div class="overlay"></div>
-    <div class="login-container">
-        <h1>Banco Inova</h1>
-        <form method="POST">
-            <div class="input-group mb-3">
+    <div class="cadastro-container">
+        <h1>Banco Inova - Cadastro</h1>
+        <form action="{{ url_for('cadastro') }}" method="POST">
+            <div class="input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fa fa-user"></i></span>
                 </div>
+                <input type="text" class="form-control" name="nome" placeholder="Nome" required>
+            </div>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fa fa-id-card"></i></span>
+                </div>
                 <input type="text" class="form-control" name="cpf" placeholder="CPF" required>
             </div>
-            <div class="input-group mb-3">
+            <div class="input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fa fa-lock"></i></span>
                 </div>
                 <input type="password" class="form-control" name="senha" placeholder="Senha" required>
             </div>
-            <input type="submit" class="btn btn-primary btn-block" value="Login">
+            <input type="submit" class="btn btn-primary btn-block" value="Cadastrar">
         </form>
-        <h3><br>Ainda não possui uma conta? <a href="{{ url_for('cadastro') }}">Cadastre-se aqui</a>.</h3>
-        <form method="POST" action="{{ url_for('pagina_admin') }}">
-            <input type="submit" class="btn btn-primary btn-block" value="Admin">
-        </form>
-        <a href="esqueceu_senha.html"><br>Esqueceu sua senha?</a>
     </div>
     <footer>
         <p>&copy; 2024 Banco Inova. Todos os direitos reservados.</p>
     </footer>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>

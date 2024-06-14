@@ -6,8 +6,11 @@ banco = Banco()
 cpf_cliente_log = ''
 senha_cliente_log = ''
 
+@app.route('/')
+def login_redirect():
+    return redirect(url_for('login'))
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         global cpf_cliente_log
@@ -16,8 +19,18 @@ def login():
         senha_cliente_log = request.form['senha']
         retorno = banco.logar_cliente(cpf_cliente_log, senha_cliente_log)
         if retorno:
-            return redirect(url_for('pagina_usuario'))
+            return redirect(url_for('index'))
     return render_template('login.html')
+
+@app.route('/cadastro', methods=['GET', 'POST'])
+def cadastro():
+    if request.method == 'POST':
+        nome = request.form['nome']
+        cpf = request.form['cpf']
+        senha = request.form['senha']
+        banco.adicionar_cliente(nome, cpf, senha)
+        return redirect(url_for('index'))
+    return render_template('cadastro.html')
 
 @app.route('/pagina_admin', methods=['GET', 'POST'])
 def pagina_admin():
@@ -38,7 +51,7 @@ def index():
 def pagina_usuario():
     return render_template('pagina_usuario.html')
 
-@app.route('/adicionar_cliente', methods=['GET', 'POST'])
+@app.route('/cadastro', methods=['GET', 'POST'])
 def adicionar_cliente():
     if request.method == 'POST':
         nome = request.form['nome']
@@ -46,7 +59,7 @@ def adicionar_cliente():
         senha = request.form['senha']
         banco.adicionar_cliente(nome, cpf, senha)
         return redirect(url_for('index'))
-    return render_template('adicionar_cliente.html')
+    return render_template('cadastro.html')
 
 @app.route('/depositar', methods=['GET', 'POST'])
 def depositar():

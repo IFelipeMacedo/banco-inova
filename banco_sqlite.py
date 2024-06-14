@@ -129,6 +129,11 @@ class Banco:
         self.conn.commit()    
 
     def adicionar_cliente(self, nome, cpf, senha):
+        # Verifica se o CPF já está em uso
+        if self.buscar_cliente_por_cpf(cpf) is not None:
+            print(f"Erro: CPF {cpf} já está cadastrado!")
+            return
+
         self.cur.execute("INSERT INTO clientes (nome, cpf, senha) VALUES (?, ?, ?)", (nome, cpf, senha))
         cliente_id = self.cur.lastrowid
         self.cur.execute("INSERT INTO contas (cliente_id) VALUES (?)", (cliente_id,))
