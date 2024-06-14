@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Página do Usuário</title>
+</head>
+
+<body>
+    <h1>Bem-vindo, Usuário!</h1>
+    <p>Você está na sua área de usuário.</p>
+    <ul>
+        <li><a href="{{ url_for('depositar') }}">Depositar</a></li>
+        <li><a href="{{ url_for('sacar') }}">Sacar</a></li>
+        <li><a href="{{ url_for('transferir') }}">Transferir</a></li>
+        <li><a href="{{ url_for('visualizar_extrato') }}">Visualizar Extrato</a></li>
+        <li><a href="{{ url_for('visualizar_saldo') }}">Visualizar Saldo</a></li>
+    </ul>
+</body>
+
+</html>
