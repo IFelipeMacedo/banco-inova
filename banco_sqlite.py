@@ -46,8 +46,8 @@ class Conta:
             valor = float(valor)
             if valor <= self.saldo:
                 self.saldo -= valor
-                conta_destino.saldo += valor
-                self._atualizar_saldo()
+                conta_destino.saldo += valor 
+                self._atualizar_saldo() 
                 conta_destino._atualizar_saldo()
                 self._registrar_extrato(f"Transferência de R${valor} para conta {conta_destino.numero}")
                 conta_destino._registrar_extrato(f"Transferência de R${valor} recebida da conta {self.numero}")
