@@ -8,11 +8,13 @@
 <body>
     <h1>Login</h1>
     <h2>Escolha uma opção:</h2>
+    <form method="POST">
+        CPF: <input type="text" name="cpf"><br>
+        Senha: <input type="password" name="senha"><br>
+        <input type="submit" value="Login">
+    </form>
     <form method="POST" action="{{ url_for('pagina_admin') }}">
         <input type="submit" value="Admin">
-    </form>
-    <form method="GET" action="{{ url_for('pagina_usuario') }}">
-        <input type="submit" value="Usuário">
     </form>
 </body>
 

@@ -49,8 +49,8 @@ class Conta:
                 conta_destino.saldo += valor 
                 self._atualizar_saldo() 
                 conta_destino._atualizar_saldo()
-                self._registrar_extrato(f"Transferência de R${valor} para conta {conta_destino.numero}")
-                conta_destino._registrar_extrato(f"Transferência de R${valor} recebida da conta {self.numero}")
+                self._registrar_extrato(f"Transferência de R${valor} para conta {conta_destino.cliente.cpf}")
+                conta_destino._registrar_extrato(f"Transferência de R${valor} recebida da conta {self.cliente.cpf}")
                 print("Transferência realizada com sucesso!")
             else:
                 print("Saldo insuficiente!")
@@ -89,7 +89,7 @@ class Conta:
         extrato_atual = resultado[0] if resultado else ""
 
         # Concatenamos o novo extrato com o extrato existente
-        novo_extrato = extrato_atual + "\n" + mensagem + "\n"
+        novo_extrato = extrato_atual + "\n" + mensagem
 
         # Atualizamos o campo extrato na tabela contas
         cur.execute("UPDATE contas SET extrato = ? WHERE numero = ?", (novo_extrato, self.numero))
@@ -126,7 +126,7 @@ class Banco:
             )
         ''')
 
-        self.conn.commit()
+        self.conn.commit()    
 
     def adicionar_cliente(self, nome, cpf, senha):
         self.cur.execute("INSERT INTO clientes (nome, cpf, senha) VALUES (?, ?, ?)", (nome, cpf, senha))
@@ -138,6 +138,13 @@ class Banco:
         conta = Conta(numero_conta, cliente)
         cliente.conta = conta
         print(f"Cliente {nome} adicionado com sucesso!")
+
+    def logar_cliente(self, cpf, senha):
+        cliente = self.buscar_cliente_por_cpf(cpf)
+        if cliente != None and cliente.senha == senha:
+            return True
+        return False
+            
 
     def buscar_cliente_por_cpf(self, cpf):
         self.cur.execute("SELECT id, nome, cpf, senha FROM clientes WHERE cpf = ?", (cpf,))

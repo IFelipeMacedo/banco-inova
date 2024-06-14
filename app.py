@@ -3,9 +3,20 @@ from banco_sqlite import Banco
 
 app = Flask(__name__)
 banco = Banco()
+cpf_cliente_log = ''
+senha_cliente_log = ''
 
-@app.route('/')
+
+@app.route('/', methods=['GET', 'POST'])
 def login():
+    if request.method == 'POST':
+        global cpf_cliente_log
+        global senha_cliente_log
+        cpf_cliente_log = request.form['cpf']
+        senha_cliente_log = request.form['senha']
+        retorno = banco.logar_cliente(cpf_cliente_log, senha_cliente_log)
+        if retorno:
+            return redirect(url_for('pagina_usuario'))
     return render_template('login.html')
 
 @app.route('/pagina_admin', methods=['GET', 'POST'])
@@ -40,57 +51,46 @@ def adicionar_cliente():
 @app.route('/depositar', methods=['GET', 'POST'])
 def depositar():
     if request.method == 'POST':
-        cpf = request.form['cpf']
         valor = float(request.form['valor'])
         senha = request.form['senha']
-        banco.realizar_deposito(cpf, valor, senha)
-        return redirect(url_for('login'))
+        banco.realizar_deposito(cpf_cliente_log, valor, senha)
+        return redirect(url_for('pagina_usuario'))
     return render_template('depositar.html')
 
 @app.route('/sacar', methods=['GET', 'POST'])
 def sacar():
     if request.method == 'POST':
-        cpf = request.form['cpf']
         valor = float(request.form['valor'])
         senha = request.form['senha']
-        banco.realizar_saque(cpf, valor, senha)
-        return redirect(url_for('login'))
+        banco.realizar_saque(cpf_cliente_log, valor, senha)
+        return redirect(url_for('pagina_usuario'))
     return render_template('sacar.html')
 
 @app.route('/transferir', methods=['GET', 'POST'])
 def transferir():
     if request.method == 'POST':
-        cpf_origem = request.form['cpf_origem']
         cpf_destino = request.form['cpf_destino']
         valor = float(request.form['valor'])
         senha = request.form['senha']
-        banco.realizar_transferencia(cpf_origem, cpf_destino, valor, senha)
-        return redirect(url_for('login'))
+        banco.realizar_transferencia(cpf_cliente_log, cpf_destino, valor, senha)
+        return redirect(url_for('pagina_usuario'))
     return render_template('transferir.html')
 
 @app.route('/visualizar_extrato', methods=['GET', 'POST'])
 def visualizar_extrato():
-    if request.method == 'POST':
-        cpf = request.form['cpf']
-        senha = request.form['senha']
-        extrato = banco.visualizar_extrato(cpf, senha)
-        if extrato:
-            return render_template('extrato.html', extrato=extrato)  
-        else:
-            return render_template('visualizar_extrato.html', erro="Cliente não encontrado ou senha incorreta!")
-    return render_template('visualizar_extrato.html')
+    extrato = banco.visualizar_extrato(cpf_cliente_log, senha_cliente_log)
+    if extrato:
+        return render_template('extrato.html', extrato=extrato)  
+    else:
+        return render_template('extrato.html', erro="Cliente não encontrado ou senha incorreta!")
 
 @app.route('/visualizar_saldo', methods=['GET', 'POST'])
 def visualizar_saldo():
-    if request.method == 'POST':
-        cpf = request.form['cpf']
-        senha = request.form['senha']
-        saldo = banco.visualizar_saldo(cpf, senha)
-        if saldo is not None:
-            return render_template('saldo.html', saldo=saldo)
-        else:
-            return render_template('visualizar_saldo.html', erro="Cliente não encontrado ou senha incorreta!")
-    return render_template('visualizar_saldo.html')
+    saldo = banco.visualizar_saldo(cpf_cliente_log, senha_cliente_log)
+    if saldo is not None:
+        return render_template('saldo.html', saldo=saldo)
+    else:
+        return render_template('saldo.html', erro="Cliente não encontrado ou senha incorreta!")
 
 if __name__ == '__main__':
     app.run(debug=True)
