@@ -106,11 +106,22 @@
             padding: 10px 0;
             z-index: 2;
         }
+
+        .logo-container {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+        }
     </style>
 </head>
 
 <body>
     <div class="overlay"></div>
+    <div class="logo-container">
+        <a href="{{ url_for('index') }}"><img src="/teste/templates/logo.png" alt="Logo"></a>
+    </div>
     <div class="login-container">
         <h1>Perfil do Usuário</h1>
         <a href="{{ url_for('alterar_nome') }}" class="btn">Alterar Nome</a>
