@@ -89,7 +89,7 @@ def depositar():
         valor = float(request.form['valor'])
         senha = request.form['senha']
         banco.realizar_deposito(cpf_cliente_log, valor, senha)
-        return redirect(url_for('pagina_usuario'))
+        return redirect(url_for('index'))
     return render_template('depositar.html')
 
 @app.route('/sacar', methods=['GET', 'POST'])
@@ -98,7 +98,7 @@ def sacar():
         valor = float(request.form['valor'])
         senha = request.form['senha']
         banco.realizar_saque(cpf_cliente_log, valor, senha)
-        return redirect(url_for('pagina_usuario'))
+        return redirect(url_for('index'))
     return render_template('sacar.html')
 
 @app.route('/transferir', methods=['GET', 'POST'])
@@ -108,7 +108,7 @@ def transferir():
         valor = float(request.form['valor'])
         senha = request.form['senha']
         banco.realizar_transferencia(cpf_cliente_log, cpf_destino, valor, senha)
-        return redirect(url_for('pagina_usuario'))
+        return redirect(url_for('index'))
     return render_template('transferir.html')
 
 @app.route('/visualizar_extrato', methods=['GET', 'POST'])
