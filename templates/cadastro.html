@@ -76,32 +76,13 @@
         }
 
         .cadastro-container .input-group {
-            margin-bottom: 20px;
+            margin: 20px 0; /* Espaçamento maior entre os itens */
         }
 
         .cadastro-container .input-group .input-group-prepend .input-group-text {
-            background-color: transparent;
+            background-color: #ffcc00;
             color: white;
             border: none;
-        }
-
-        .cadastro-container input[type="text"],
-        .cadastro-container input[type="password"] {
-            background-color: white;
-            border: none;
-            border-bottom: 2px solid #ffcc00;
-            color: #0044cc;
-            margin-bottom: 20px;
-            padding: 10px;
-            width: 100%;
-            font-size: 1em;
-            transition: border-bottom-color 0.3s;
-        }
-
-        .cadastro-container input[type="text"]:focus,
-        .cadastro-container input[type="password"]:focus {
-            border-bottom-color: #9e841a;
-            outline: none;
         }
 
         .cadastro-container input[type="submit"] {
@@ -159,6 +140,7 @@
                 <input type="password" class="form-control" name="senha" placeholder="Senha" required>
             </div>
             <input type="submit" class="btn btn-primary btn-block" value="Cadastrar">
+            <p style="margin-top: 20px;"><a href="{{ url_for('login') }}">Já tem login? Clique aqui!</a></p>
         </form>
     </div>
     <footer>

@@ -119,13 +119,14 @@ def visualizar_extrato():
     else:
         return render_template('extrato.html', erro="Cliente não encontrado ou senha incorreta!")
 
-@app.route('/visualizar_saldo', methods=['GET', 'POST'])
-def visualizar_saldo():
+@app.route('/saldo')
+def saldo():
     saldo = banco.visualizar_saldo(cpf_cliente_log, senha_cliente_log)
     if saldo is not None:
         return render_template('saldo.html', saldo=saldo)
     else:
         return render_template('saldo.html', erro="Cliente não encontrado ou senha incorreta!")
+
 
 if __name__ == '__main__':
     app.run(debug=True)
