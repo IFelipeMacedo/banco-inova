@@ -144,6 +144,16 @@ class Banco:
         cliente.conta = conta
         print(f"Cliente {nome} adicionado com sucesso!")
 
+    def alterar_nome(self, cpf, novo_nome):
+        cliente = self.buscar_cliente_por_cpf(cpf)
+        if cliente:
+            cliente.nome = novo_nome
+            self.cur.execute("UPDATE clientes SET nome = ? WHERE cpf = ?", (novo_nome, cpf))
+            self.conn.commit()
+            print(f"Nome do cliente com CPF {cpf} alterado para {novo_nome} com sucesso!")
+        else:
+            print("Cliente não encontrado!")
+
     def atualizar_senha_cliente(self, cpf, nova_senha):
         self.cur.execute("UPDATE clientes SET senha = ? WHERE cpf = ?", (nova_senha, cpf))
         self.conn.commit()

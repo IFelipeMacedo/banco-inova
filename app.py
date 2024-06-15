@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template, redirect, url_for
+from flask import Flask, request, render_template, redirect, url_for
 from banco_sqlite import Banco
 
 app = Flask(__name__)
@@ -47,6 +47,17 @@ def pagina_admin():
 def index():
     return render_template('index.html')
 
+@app.route('/alterar_nome', methods=['GET', 'POST'])
+def alterar_nome():
+    if request.method == 'POST':
+        novo_nome = request.form['novo_nome']  # Corrigir para obter o novo nome do campo correto
+        banco.alterar_nome(cpf_cliente_log, novo_nome)
+        return redirect(url_for('perfil'))
+    else:
+        cliente = banco.buscar_cliente_por_cpf(cpf_cliente_log)
+        nome_atual = cliente.nome if cliente else ''  # Obter o nome atual do cliente
+        return render_template('alterar_nome.html', nome_atual=nome_atual)
+
 @app.route('/alterar_senha', methods=['GET', 'POST'])
 def alterar_senha():
     if request.method == 'POST':
@@ -62,25 +73,15 @@ def alterar_senha():
             banco.atualizar_senha_cliente(cpf_cliente_log, nova_senha)
             global senha_cliente_log
             senha_cliente_log = nova_senha
-            return redirect(url_for('index'))
+            return redirect(url_for('perfil'))
         else:
             return render_template('alterar_senha.html', erro="Senha atual incorreta!")
     
     return render_template('alterar_senha.html')
 
-@app.route('/pagina_usuario')
-def pagina_usuario():
-    return render_template('pagina_usuario.html')
-
-@app.route('/cadastro', methods=['GET', 'POST'])
-def adicionar_cliente():
-    if request.method == 'POST':
-        nome = request.form['nome']
-        cpf = request.form['cpf']
-        senha = request.form['senha']
-        banco.adicionar_cliente(nome, cpf, senha)
-        return redirect(url_for('index'))
-    return render_template('cadastro.html')
+@app.route('/perfil')
+def perfil():
+    return render_template('perfil.html')
 
 @app.route('/depositar', methods=['GET', 'POST'])
 def depositar():
