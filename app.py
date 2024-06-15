@@ -47,13 +47,26 @@ def pagina_admin():
 def index():
     return render_template('index.html')
 
-@app.route('configuracao_conta', methods=['GET', 'POST'])
-def configuracao_conta():
+@app.route('/alterar_senha', methods=['GET', 'POST'])
+def alterar_senha():
     if request.method == 'POST':
-        senha = request.form['senha']
-        banco.atualizar_cliente(senha, cpf_cliente_log)
-        return redirect(url_for('pagina_usuario'))
-    return render_template('configuracao_conta.html')
+        senha_atual = request.form['senha_atual']
+        nova_senha = request.form['nova_senha']
+        confirmacao_senha = request.form['confirmacao_senha']
+        
+        if nova_senha != confirmacao_senha:
+            return render_template('alterar_senha.html', erro="Nova senha e confirmação não coincidem!")
+        
+        cliente = banco.buscar_cliente_por_cpf(cpf_cliente_log)
+        if cliente and cliente.senha == senha_atual:
+            banco.atualizar_senha_cliente(cpf_cliente_log, nova_senha)
+            global senha_cliente_log
+            senha_cliente_log = nova_senha
+            return redirect(url_for('index'))
+        else:
+            return render_template('alterar_senha.html', erro="Senha atual incorreta!")
+    
+    return render_template('alterar_senha.html')
 
 @app.route('/pagina_usuario')
 def pagina_usuario():

@@ -144,6 +144,11 @@ class Banco:
         cliente.conta = conta
         print(f"Cliente {nome} adicionado com sucesso!")
 
+    def atualizar_senha_cliente(self, cpf, nova_senha):
+        self.cur.execute("UPDATE clientes SET senha = ? WHERE cpf = ?", (nova_senha, cpf))
+        self.conn.commit()
+        print(f"Senha do cliente com CPF {cpf} atualizada com sucesso!")
+
     def logar_cliente(self, cpf, senha):
         cliente = self.buscar_cliente_por_cpf(cpf)
         if cliente != None and cliente.senha == senha:
