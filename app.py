@@ -22,6 +22,24 @@ def login():
             return redirect(url_for('index'))
     return render_template('login.html')
 
+@app.route('/esqueceu_senha', methods=['GET', 'POST'])
+def esqueceu_senha():
+    if request.method == 'POST':
+        cpf = request.form['cpf']
+        cliente = banco.buscar_cliente_por_cpf(cpf)
+        if cliente:
+            # Se o CPF existir no banco de dados, renderize a página de senha recuperada
+            return render_template('senha_recuperada.html', senha=cliente.senha)
+        else:
+            # Se o CPF não existir no banco de dados, retorne uma mensagem de erro
+            return render_template('esqueceu_senha.html', erro="CPF não encontrado")
+    return render_template('esqueceu_senha.html')
+
+@app.route('/senha_recuperada')
+def senha_recuperada():
+    # Esta rota é usada apenas para renderizar a página de senha recuperada
+    return render_template('senha_recuperada.html')
+
 @app.route('/cadastro', methods=['GET', 'POST'])
 def cadastro():
     if request.method == 'POST':

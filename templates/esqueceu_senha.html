@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Banco Inova - Login</title>
+    <title>Recuperar Senha</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
         integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2DhYQj80XIR7IpTD7WRnoxTtr1EY6I4P1kpW6P7mmdE5dTPRmLJImq25DZjZ3JOw=="
@@ -22,15 +22,6 @@
             height: 100vh;
             color: white;
             overflow: hidden;
-        }
-
-        a {
-            color: #fff;
-        }
-
-        h3 {
-            font-size: x-small;
-            text-align: left;
         }
 
         .overlay {
@@ -75,17 +66,33 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
 
-        .login-container .input-group {
-            margin: 10px 0;
+        .login-container .form-group {
+            margin-bottom: 20px;
         }
 
-        .login-container .input-group .input-group-prepend .input-group-text {
-            background-color: #ffcc00;
+        .login-container .form-group label {
             color: white;
-            border: none;
+            font-weight: bold;
         }
 
-        .login-container input[type="submit"] {
+        .login-container .form-control {
+            background-color: #ffffff; /* Altere a cor de fundo conforme necessário */
+            color: #0044cc; /* Altere a cor do texto conforme necessário */
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            width: 100%;
+            font-size: 1em;
+            transition: background-color 0.3s;
+        }
+
+        .login-container .form-control:focus {
+            background-color: #f2f2f2; /* Altere a cor de fundo do foco conforme necessário */
+            color: #0044cc; /* Altere a cor do texto do foco conforme necessário */
+            outline: none;
+        }
+
+        .login-container .btn-primary {
             background-color: #ffcc00;
             color: #0044cc;
             padding: 15px;
@@ -98,71 +105,26 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        .login-container input[type="submit"]:hover {
+        .login-container .btn-primary:hover {
             background-color: #9e841a;
             color: antiquewhite;
-        }
-
-        .info-bar {
-            background-color: #0044cc;
-            color: white;
-            text-align: center;
-            padding: 10px 0;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 2;
-        }
-
-        .info-bar p {
-            margin: 0;
-        }
-
-        footer {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            background-color: #0044cc;
-            color: white;
-            text-align: center;
-            padding: 10px 0;
-            z-index: 2;
         }
     </style>
 </head>
 
 <body>
-    <div class="info-bar">
-        <p>Banco Inova: Transformando inovação em soluções práticas e eficientes para você.</p>
-    </div>
     <div class="overlay"></div>
     <div class="login-container">
-        <h1>Banco Inova</h1>
+        <h1>Recuperar Senha</h1>
         <form method="POST">
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fa fa-user"></i></span>
-                </div>
-                <input type="text" class="form-control" name="cpf" placeholder="CPF" required>
+            <div class="form-group">
+                <label for="cpf">Digite seu CPF:</label>
+                <input type="text" class="form-control" id="cpf" name="cpf" required>
             </div>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fa fa-lock"></i></span>
-                </div>
-                <input type="password" class="form-control" name="senha" placeholder="Senha" required>
-            </div>
-            <input type="submit" class="btn btn-primary btn-block" value="Login">
+            <button type="submit" class="btn btn-primary">Confirmar</button>
         </form>
-        <h3><br>Ainda não possui uma conta? <a href="{{ url_for('cadastro') }}">Cadastre-se aqui</a>.</h3>
-        <form method="POST" action="{{ url_for('pagina_admin') }}">
-            <input type="submit" class="btn btn-primary btn-block" value="Admin">
-        </form>
-        <a href="{{ url_for('esqueceu_senha') }}"><br>Esqueceu sua senha?</a>
+        <a href="{{ url_for('login') }}" class="btn btn-primary mt-3">Voltar para o Login</a>
     </div>
-    <footer>
-        <p>&copy; 2024 Banco Inova. Todos os direitos reservados.</p>
-    </footer>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
