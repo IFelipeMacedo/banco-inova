@@ -103,6 +103,10 @@
             color: antiquewhite;
         }
 
+        .cadastro-container .link {
+            color: #ffcc00;
+        }
+
         footer {
             position: absolute;
             bottom: 0;
@@ -140,7 +144,7 @@
                 <input type="password" class="form-control" name="senha" placeholder="Senha" required>
             </div>
             <input type="submit" class="btn btn-primary btn-block" value="Cadastrar">
-            <p style="margin-top: 20px;"><a href="{{ url_for('login') }}">Já tem login? Clique aqui!</a></p>
+            <p style="margin-top: 20px;"><a class="link" href="{{ url_for('login') }}">Já tem login? Clique aqui!</a></p>
         </form>
     </div>
     <footer>

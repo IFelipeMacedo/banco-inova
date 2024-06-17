@@ -103,6 +103,10 @@
             color: antiquewhite;
         }
 
+        .login-container .link {
+            color: #ffcc00;
+        }
+
         .info-bar {
             background-color: #0044cc;
             color: white;
@@ -154,11 +158,11 @@
             </div>
             <input type="submit" class="btn btn-primary btn-block" value="Login">
         </form>
-        <h3><br>Ainda não possui uma conta? <a href="{{ url_for('cadastro') }}">Cadastre-se aqui</a>.</h3>
+        <h3><br>Ainda não possui uma conta? <a class="link" href="{{ url_for('cadastro') }}">Cadastre-se aqui</a>.</h3>
         <form method="POST" action="{{ url_for('pagina_admin') }}">
             <input type="submit" class="btn btn-primary btn-block" value="Admin">
         </form>
-        <a href="{{ url_for('esqueceu_senha') }}"><br>Esqueceu sua senha?</a>
+        <a class="link" href="{{ url_for('esqueceu_senha') }}"><br>Esqueceu sua senha?</a>
     </div>
     <footer>
         <p>&copy; 2024 Banco Inova. Todos os direitos reservados.</p>
