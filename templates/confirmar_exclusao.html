@@ -136,6 +136,21 @@
             <a href="{{ url_for('perfil') }}" class="btn btn-secondary">Cancelar</a>
         </form>
     </div>
+    <script>
+        // Manipulação do histórico
+        window.addEventListener('load', function() {
+            // Adicionar estado ao histórico
+            history.pushState(null, null, location.href);
+            history.pushState(null, null, location.href); // Adiciona um segundo estado
+
+            // Interceptar o evento de navegação para trás
+            window.onpopstate = function () {
+                // Quando o usuário tentar voltar, empurrar estado novamente e redirecionar para a mesma página
+                history.pushState(null, null, location.href);
+                alert("Navegação para trás está desativada nesta página.");
+            };
+        });
+    </script>
 </body>
 
 </html>
