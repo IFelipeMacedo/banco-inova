@@ -47,7 +47,7 @@ def cadastro():
         cpf = request.form['cpf']
         senha = request.form['senha']
         banco.adicionar_cliente(nome, cpf, senha)
-        return redirect(url_for('index'))
+        return redirect(url_for('login'))
     return render_template('cadastro.html')
 
 @app.route('/pagina_admin', methods=['GET', 'POST'])
