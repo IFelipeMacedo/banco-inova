@@ -28,16 +28,13 @@ def esqueceu_senha():
         cpf = request.form['cpf']
         cliente = banco.buscar_cliente_por_cpf(cpf)
         if cliente:
-            # Se o CPF existir no banco de dados, renderize a página de senha recuperada
             return render_template('senha_recuperada.html', senha=cliente.senha)
         else:
-            # Se o CPF não existir no banco de dados, retorne uma mensagem de erro
             return render_template('esqueceu_senha.html', erro="CPF não encontrado")
     return render_template('esqueceu_senha.html')
 
 @app.route('/senha_recuperada')
 def senha_recuperada():
-    # Esta rota é usada apenas para renderizar a página de senha recuperada
     return render_template('senha_recuperada.html')
 
 @app.route('/cadastro', methods=['GET', 'POST'])
@@ -67,17 +64,20 @@ def index():
 
 @app.route('/alterar_nome', methods=['GET', 'POST'])
 def alterar_nome():
+    global cpf_cliente_log
     if request.method == 'POST':
-        novo_nome = request.form['novo_nome']  # Corrigir para obter o novo nome do campo correto
+        novo_nome = request.form['novo_nome']
         banco.alterar_nome(cpf_cliente_log, novo_nome)
         return redirect(url_for('perfil'))
     else:
         cliente = banco.buscar_cliente_por_cpf(cpf_cliente_log)
-        nome_atual = cliente.nome if cliente else ''  # Obter o nome atual do cliente
+        nome_atual = cliente.nome if cliente else ''
         return render_template('alterar_nome.html', nome_atual=nome_atual)
 
 @app.route('/alterar_senha', methods=['GET', 'POST'])
 def alterar_senha():
+    global cpf_cliente_log
+    global senha_cliente_log
     if request.method == 'POST':
         senha_atual = request.form['senha_atual']
         nova_senha = request.form['nova_senha']
@@ -89,7 +89,6 @@ def alterar_senha():
         cliente = banco.buscar_cliente_por_cpf(cpf_cliente_log)
         if cliente and cliente.senha == senha_atual:
             banco.atualizar_senha_cliente(cpf_cliente_log, nova_senha)
-            global senha_cliente_log
             senha_cliente_log = nova_senha
             return redirect(url_for('perfil'))
         else:
@@ -103,6 +102,7 @@ def perfil():
 
 @app.route('/depositar', methods=['GET', 'POST'])
 def depositar():
+    global cpf_cliente_log
     if request.method == 'POST':
         valor = float(request.form['valor'])
         senha = request.form['senha']
@@ -112,6 +112,7 @@ def depositar():
 
 @app.route('/sacar', methods=['GET', 'POST'])
 def sacar():
+    global cpf_cliente_log
     if request.method == 'POST':
         valor = float(request.form['valor'])
         senha = request.form['senha']
@@ -121,6 +122,7 @@ def sacar():
 
 @app.route('/transferir', methods=['GET', 'POST'])
 def transferir():
+    global cpf_cliente_log
     if request.method == 'POST':
         cpf_destino = request.form['cpf_destino']
         valor = float(request.form['valor'])
@@ -131,15 +133,19 @@ def transferir():
 
 @app.route('/visualizar_extrato', methods=['GET', 'POST'])
 def visualizar_extrato():
+    global cpf_cliente_log
+    global senha_cliente_log
     extrato = banco.visualizar_extrato(cpf_cliente_log, senha_cliente_log)
     if extrato:
-        extrato_list = extrato.split('\n')  # Dividir a string do extrato em uma lista
+        extrato_list = extrato.split('\n')
         return render_template('extrato.html', extrato_list=extrato_list)
     else:
         return render_template('extrato.html', erro="Cliente não encontrado ou senha incorreta!")
 
 @app.route('/saldo')
 def saldo():
+    global cpf_cliente_log
+    global senha_cliente_log
     saldo = banco.visualizar_saldo(cpf_cliente_log, senha_cliente_log)
     if saldo is not None:
         return render_template('saldo.html', saldo=saldo)
@@ -149,6 +155,26 @@ def saldo():
 @app.route('/logout')
 def logout():
     global cpf_cliente_log, senha_cliente_log
+    cpf_cliente_log = ''
+    senha_cliente_log = ''
+    return redirect(url_for('login'))
+
+@app.route('/excluir_conta', methods=['GET', 'POST'])
+def excluir_conta():
+    global cpf_cliente_log
+    if request.method == 'POST':
+        senha = request.form['senha']
+        cliente = banco.buscar_cliente_por_cpf(cpf_cliente_log)
+        if cliente and cliente.senha == senha:
+            return redirect(url_for('confirmar_exclusao'))
+        else:
+            return render_template('confirmar_exclusao.html', erro="Senha incorreta!")
+    return render_template('confirmar_exclusao.html')
+
+@app.route('/confirmar_exclusao', methods=['POST'])
+def confirmar_exclusao():
+    global cpf_cliente_log, senha_cliente_log
+    banco.excluir_cliente(cpf_cliente_log)
     cpf_cliente_log = ''
     senha_cliente_log = ''
     return redirect(url_for('login'))

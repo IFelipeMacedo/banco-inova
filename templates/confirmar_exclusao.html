@@ -4,11 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil</title>
+    <title>Confirmar Exclusão de Conta</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-        integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2DhYQj80XIR7IpTD7WRnoxTtr1EY6I4P1kpW6P7mmdE5dTPRmLJImq25DZjZ3JOw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -17,21 +14,11 @@
             background: url('https://png.pngtree.com/background/20210715/original/pngtree-blue-technology-circuit-style-background-picture-image_1306799.jpg') no-repeat center center fixed;
             background-size: cover;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
             color: white;
             overflow: hidden;
-        }
-
-        a {
-            color: #fff;
-        }
-
-        h3 {
-            font-size: x-small;
-            text-align: left;
         }
 
         .overlay {
@@ -55,7 +42,6 @@
             max-width: 400px;
             width: 100%;
             animation: fadeIn 1.5s ease-in-out;
-            margin-bottom: 20px;
         }
 
         @keyframes fadeIn {
@@ -77,6 +63,31 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
 
+        .login-container .form-group {
+            margin-bottom: 20px;
+        }
+
+        .login-container .form-group label {
+            color: white;
+            font-weight: bold;
+        }
+
+        .login-container .form-control {
+            background-color: #ffffff;
+            color: #0044cc;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 1em;
+            transition: background-color 0.3s;
+        }
+
+        .login-container .form-control:focus {
+            background-color: #f2f2f2;
+            color: #0044cc;
+            outline: none;
+        }
+
         .login-container .btn {
             background-color: #ffcc00;
             color: #0044cc;
@@ -96,82 +107,35 @@
             color: antiquewhite;
         }
 
-        .login-container .btn-logout {
-            background-color: #ffcc00;
-            color: #0044cc;
-            padding: 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            width: 100%;
-            font-size: 1em;
-            transition: background-color 0.3s;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin-bottom: 10px;
-        }
-
-        .login-container .btn-logout:hover {
+        .login-container .btn-danger {
             background-color: #ff0000;
             color: #fff;
         }
 
-        footer {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            background-color: #0044cc;
-            color: white;
-            text-align: center;
-            padding: 10px 0;
-            z-index: 2;
-        }
-
-        .logo-container {
-            position: absolute;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 2;
-        }
-
-        .btn-delete {
-            background-color: #ff0000;
-            color: #fff;
-            padding: 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            width: 100%;
-            font-size: 1em;
-            transition: background-color 0.3s;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .btn-delete:hover {
+        .login-container .btn-danger:hover {
             background-color: #cc0000;
         }
-
     </style>
 </head>
 
 <body>
     <div class="overlay"></div>
-    <div class="logo-container">
-        <a href="{{ url_for('index') }}"><img src="caminho" alt="Logo"></a>
-    </div>
     <div class="login-container">
-        <h1>Perfil do Usuário</h1>
-        <a href="{{ url_for('alterar_nome') }}" class="btn">Alterar Nome</a>
-        <a href="{{ url_for('alterar_senha') }}" class="btn">Alterar Senha</a>
-        <a href="{{ url_for('logout') }}" class="btn btn-logout">Sair da Conta</a>
-        <a href="{{ url_for('excluir_conta') }}" class="btn btn-delete mt-3">Excluir Conta</a>
+        <h1>Confirmar Exclusão de Conta</h1>
+        {% if erro %}
+        <div class="alert alert-danger" role="alert">
+            {{ erro }}
+        </div>
+        {% endif %}
+        <form method="POST" action="{{ url_for('confirmar_exclusao') }}">
+            <div class="form-group">
+                <label for="senha">Digite sua senha para confirmar:</label>
+                <input type="password" class="form-control" id="senha" name="senha" required>
+            </div>
+            <button type="submit" class="btn btn-danger">Confirmar Exclusão</button>
+            <a href="{{ url_for('perfil') }}" class="btn btn-secondary">Cancelar</a>
+        </form>
     </div>
-    <footer>
-        <p>&copy; 2024 Banco Inova. Todos os direitos reservados.</p>
-    </footer>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>

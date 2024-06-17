@@ -221,6 +221,16 @@ class Banco:
             return cliente.conta.visualizar_saldo(senha)
         else:
             print("Cliente não encontrado!")
+    
+    def excluir_cliente(self, cpf):
+        cliente = self.buscar_cliente_por_cpf(cpf)
+        if cliente:
+            self.cur.execute("DELETE FROM contas WHERE cliente_id = ?", (cliente.id,))
+            self.cur.execute("DELETE FROM clientes WHERE id = ?", (cliente.id,))
+            self.conn.commit()
+            print(f"Cliente com CPF {cpf} excluído com sucesso!")
+        else:
+            print("Cliente não encontrado!")
 
     def __del__(self):
         self.cur.close()
