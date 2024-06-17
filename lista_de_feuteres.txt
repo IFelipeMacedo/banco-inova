@@ -1,5 +1,6 @@
 () -> Opcional
 
-01 - Redefinir alguns diagramas
-02 - (Criptografar senhas)
-03- Ver questão das validações de senha 
+01 - Redefinir alguns diagramas.
+02 - (Criptografar senhas).
+03- Ver questão das validações de senha.
+04- Colocar logo nas páginas.
