@@ -115,7 +115,8 @@ def transferir():
 def visualizar_extrato():
     extrato = banco.visualizar_extrato(cpf_cliente_log, senha_cliente_log)
     if extrato:
-        return render_template('extrato.html', extrato=extrato)  
+        extrato_list = extrato.split('\n')  # Dividir a string do extrato em uma lista
+        return render_template('extrato.html', extrato_list=extrato_list)
     else:
         return render_template('extrato.html', erro="Cliente não encontrado ou senha incorreta!")
 
