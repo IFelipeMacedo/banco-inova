@@ -2,3 +2,4 @@
 
 01 - Redefinir alguns diagramas
 02 - (Criptografar senhas)
+03- Ver questão das validações de senha 
