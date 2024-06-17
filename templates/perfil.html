@@ -183,7 +183,7 @@
             window.onpopstate = function () {
                 // Quando o usuário tentar voltar, empurrar estado novamente e redirecionar para a mesma página
                 history.pushState(null, null, location.href);
-                alert("Navegação para trás está desativada nesta página.");
+                alert("Função de voltar bloqueada, use o botão específico da página.");
             };
         });
     </script>
