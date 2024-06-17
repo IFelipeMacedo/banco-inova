@@ -127,6 +127,12 @@ def saldo():
     else:
         return render_template('saldo.html', erro="Cliente não encontrado ou senha incorreta!")
 
+@app.route('/logout')
+def logout():
+    global cpf_cliente_log, senha_cliente_log
+    cpf_cliente_log = ''
+    senha_cliente_log = ''
+    return redirect(url_for('login'))
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -114,6 +114,25 @@
             transform: translateX(-50%);
             z-index: 2;
         }
+
+        .login-container .btn-logout {
+        background-color: #ffcc00;
+        color: #0044cc;
+        padding: 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100%;
+        font-size: 1em;
+        transition: background-color 0.3s;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 10px;
+        }
+
+        .login-container .btn-logout:hover {
+            background-color: #ff0000;
+            color: #fff;
+        }
     </style>
 </head>
 
@@ -126,6 +145,7 @@
         <h1>Perfil do Usuário</h1>
         <a href="{{ url_for('alterar_nome') }}" class="btn">Alterar Nome</a>
         <a href="{{ url_for('alterar_senha') }}" class="btn">Alterar Senha</a>
+        <a href="{{ url_for('logout') }}" class="btn btn-logout">Sair da Conta</a>
     </div>
     <footer>
         <p>&copy; 2024 Banco Inova. Todos os direitos reservados.</p>
