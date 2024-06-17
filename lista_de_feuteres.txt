@@ -5,3 +5,16 @@
 03 - Deletar Conta
 04 - (Bloquear voltar tela)
 05 - (Criptografar senhas)
+
+<script>
+        // Função para impedir a navegação para trás
+        function preventBack() {
+            window.history.pushState(null, "", window.location.href);
+            window.onpopstate = function () {
+                window.history.pushState(null, "", window.location.href);
+            };
+        }
+
+        // Chama a função ao carregar a página
+        window.onload = preventBack;
+    </script>
