@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Confirmar Exclusão de Conta</title>
+    <title>Excluir Conta</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -49,7 +48,6 @@
                 opacity: 0;
                 transform: scale(0.9);
             }
-
             to {
                 opacity: 1;
                 transform: scale(1);
@@ -117,22 +115,21 @@
         }
     </style>
 </head>
-
 <body>
     <div class="overlay"></div>
     <div class="login-container">
-        <h1>Confirmar Exclusão de Conta</h1>
+        <h1>Excluir Conta</h1>
         {% if erro %}
         <div class="alert alert-danger" role="alert">
             {{ erro }}
         </div>
         {% endif %}
-        <form method="POST" action="{{ url_for('confirmar_exclusao') }}">
+        <form method="POST" action="{{ url_for('excluir_conta') }}">
             <div class="form-group">
                 <label for="senha">Digite sua senha para confirmar:</label>
                 <input type="password" class="form-control" id="senha" name="senha" required>
             </div>
-            <button type="submit" class="btn btn-danger">Confirmar Exclusão</button>
+            <button type="submit" class="btn btn-danger">Excluir Conta</button>
             <a href="{{ url_for('perfil') }}" class="btn btn-secondary">Cancelar</a>
         </form>
     </div>
@@ -152,5 +149,4 @@
         });
     </script>
 </body>
-
 </html>

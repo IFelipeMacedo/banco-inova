@@ -166,18 +166,11 @@ def excluir_conta():
         senha = request.form['senha']
         cliente = banco.buscar_cliente_por_cpf(cpf_cliente_log)
         if cliente and cliente.senha == senha:
-            return redirect(url_for('confirmar_exclusao'))
+            banco.excluir_cliente(cpf_cliente_log, senha)
+            return redirect(url_for('login'))
         else:
-            return render_template('confirmar_exclusao.html', erro="Senha incorreta!")
-    return render_template('confirmar_exclusao.html')
-
-@app.route('/confirmar_exclusao', methods=['POST'])
-def confirmar_exclusao():
-    global cpf_cliente_log, senha_cliente_log
-    banco.excluir_cliente(cpf_cliente_log)
-    cpf_cliente_log = ''
-    senha_cliente_log = ''
-    return redirect(url_for('login'))
+            return render_template('excluir_conta.html', erro="Senha incorreta!")
+    return render_template('excluir_conta.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

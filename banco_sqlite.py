@@ -77,35 +77,27 @@ class Conta:
         cur.close()
         conn.close()
 
-
-
     def _registrar_extrato(self, mensagem):
         conn = sqlite3.connect("projeto_banco.db", check_same_thread=False)
         cur = conn.cursor()
 
-        # Primeiro, recuperamos o extrato atual da conta
         cur.execute("SELECT extrato FROM contas WHERE numero = ?", (self.numero,))
         resultado = cur.fetchone()
         extrato_atual = resultado[0] if resultado else ""
 
-        # Concatenamos o novo extrato com o extrato existente
         novo_extrato = extrato_atual + "\n" + mensagem
 
-        # Atualizamos o campo extrato na tabela contas
         cur.execute("UPDATE contas SET extrato = ? WHERE numero = ?", (novo_extrato, self.numero))
         
         conn.commit()
         cur.close()
         conn.close()
 
-
-
 class Banco:
     def __init__(self):
         self.conn = sqlite3.connect("projeto_banco.db", check_same_thread=False)
         self.cur = self.conn.cursor()
 
-        # Criação da tabela clientes se não existir
         self.cur.execute('''
             CREATE TABLE IF NOT EXISTS clientes (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -115,7 +107,6 @@ class Banco:
             )
         ''')
 
-        # Criação da tabela contas se não existir
         self.cur.execute('''
             CREATE TABLE IF NOT EXISTS contas (
                 numero INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -129,7 +120,14 @@ class Banco:
         self.conn.commit()    
 
     def adicionar_cliente(self, nome, cpf, senha):
-        # Verifica se o CPF já está em uso
+        if len(cpf) != 11 or not cpf.isdigit():
+            print("Erro: CPF deve ter 11 dígitos numéricos!")
+            return
+
+        if len(senha) != 8:
+            print("Erro: Senha deve ter 8 dígitos!")
+            return
+
         if self.buscar_cliente_por_cpf(cpf) is not None:
             print(f"Erro: CPF {cpf} já está cadastrado!")
             return
@@ -155,16 +153,27 @@ class Banco:
             print("Cliente não encontrado!")
 
     def atualizar_senha_cliente(self, cpf, nova_senha):
+        if len(nova_senha) != 8:
+            print("Erro: Nova senha deve ter 8 dígitos!")
+            return
+
         self.cur.execute("UPDATE clientes SET senha = ? WHERE cpf = ?", (nova_senha, cpf))
         self.conn.commit()
         print(f"Senha do cliente com CPF {cpf} atualizada com sucesso!")
 
     def logar_cliente(self, cpf, senha):
+        if len(cpf) != 11 or not cpf.isdigit():
+            print("Erro: CPF deve ter 11 dígitos numéricos!")
+            return False
+
+        if len(senha) != 8:
+            print("Erro: Senha deve ter 8 dígitos!")
+            return False
+
         cliente = self.buscar_cliente_por_cpf(cpf)
-        if cliente != None and cliente.senha == senha:
+        if cliente and cliente.senha == senha:
             return True
         return False
-            
 
     def buscar_cliente_por_cpf(self, cpf):
         self.cur.execute("SELECT id, nome, cpf, senha FROM clientes WHERE cpf = ?", (cpf,))
@@ -222,13 +231,20 @@ class Banco:
         else:
             print("Cliente não encontrado!")
     
-    def excluir_cliente(self, cpf):
+    def excluir_cliente(self, cpf, senha):
+        if len(senha) != 8:
+            print("Erro: Senha deve ter 8 dígitos!")
+            return
+
         cliente = self.buscar_cliente_por_cpf(cpf)
         if cliente:
-            self.cur.execute("DELETE FROM contas WHERE cliente_id = ?", (cliente.id,))
-            self.cur.execute("DELETE FROM clientes WHERE id = ?", (cliente.id,))
-            self.conn.commit()
-            print(f"Cliente com CPF {cpf} excluído com sucesso!")
+            if cliente.senha == senha:
+                self.cur.execute("DELETE FROM contas WHERE cliente_id = ?", (cliente.id,))
+                self.cur.execute("DELETE FROM clientes WHERE id = ?", (cliente.id,))
+                self.conn.commit()
+                print(f"Cliente com CPF {cpf} excluído com sucesso!")
+            else:
+                print("Senha incorreta!")
         else:
             print("Cliente não encontrado!")
 
