@@ -47,17 +47,6 @@ def cadastro():
         return redirect(url_for('login'))
     return render_template('cadastro.html')
 
-@app.route('/pagina_admin', methods=['GET', 'POST'])
-def pagina_admin():
-    if request.method == 'POST':
-        senha_admin = request.form.get('senha_admin')
-        if senha_admin == 'senha_correta':
-            return redirect(url_for('index'))
-        else:
-            return render_template('pagina_admin.html', erro="Senha de admin incorreta!")
-    else:
-        return render_template('pagina_admin.html')
-
 @app.route('/index')
 def index():
     return render_template('index.html')
